@@ -22,8 +22,5 @@ cd rabbit_mq-test-task
 ```
 2. Поднимите контейнеры:
 ```bash
-bash
-Копировать
-Редактировать
 docker-compose up -d --build
 ```
