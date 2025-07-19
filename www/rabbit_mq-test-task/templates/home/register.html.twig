@@ -1,0 +1,11 @@
+<h1>Регистрация</h1>
+<form method="post">
+    <label>Email:<br><input type="email" name="email" required value="{{ last_username|e }}"></label><br><br>
+    <label>Пароль:<br><input type="password" name="password" required></label><br><br>
+    <label>Повторите пароль:<br><input type="password" name="password_confirm" required></label><br><br>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <button type="submit">Зарегистрироваться</button>
+</form>
+<p>Уже есть аккаунт? <a href="/login">Войти</a></p> 

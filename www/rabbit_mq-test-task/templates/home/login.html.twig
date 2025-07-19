@@ -1,0 +1,11 @@
+<h1>Вход</h1>
+{% if error %}
+    <p style="color: red;">Ошибка входа: {{ error.messageKey|trans(error.messageData, 'security') }}</p>
+{% endif %}
+<form method="post">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+    <label>Email:<br><input type="email" name="email" required value="{{ last_username|e }}"></label><br><br>
+    <label>Пароль:<br><input type="password" name="password" required></label><br><br>
+    <button type="submit">Войти</button>
+</form>
+<p>Нет аккаунта? <a href="/register">Зарегистрируйтесь</a></p> 
