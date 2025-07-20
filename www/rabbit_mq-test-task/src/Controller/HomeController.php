@@ -21,22 +21,21 @@ class HomeController extends AbstractController
     public function index(Request $request): Response
     {
         if ($this->getUser() === null) {
+            if ($request->isMethod('POST')) {
+                $connection = new \PhpAmqpLib\Connection\AMQPStreamConnection('rabbitmq', 5672, 'guest', 'guest');
+                $channel = $connection->channel();
+                $channel->queue_declare('demo_queue', false, false, false, false);
+                $msg = new \PhpAmqpLib\Message\AMQPMessage('Hello from HomeController!');
+                $channel->basic_publish($msg, '', 'demo_queue');
+                $channel->close();
+                $connection->close();
+                $this->addFlash('success', 'Сообщение отправлено в RabbitMQ!');
+                return $this->redirectToRoute('home');
+            }
             return $this->render('home/guest.html.twig');
         }
-        $messageSent = false;
-        if ($request->isMethod('POST')) {
-            $connection = new AMQPStreamConnection('rabbitmq', 5672, 'guest', 'guest');
-            $channel = $connection->channel();
-            $channel->queue_declare('demo_queue', false, false, false, false);
-            $msg = new AMQPMessage('Hello from HomeController!');
-            $channel->basic_publish($msg, '', 'demo_queue');
-            $channel->close();
-            $connection->close();
-            $messageSent = true;
-        }
-        return $this->render('home/index.html.twig', [
-            'messageSent' => $messageSent
-        ]);
+        // Для авторизованных пользователей делаем редирект на дашборд
+        return $this->redirectToRoute('dashboard');
     }
 
     #[Route('/login', name: 'login', methods: ['GET', 'POST'])]

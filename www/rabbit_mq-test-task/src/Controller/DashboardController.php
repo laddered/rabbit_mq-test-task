@@ -16,19 +16,17 @@ class DashboardController extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function index(Request $request): Response
     {
-        $messageSent = false;
         if ($request->isMethod('POST')) {
-            $connection = new AMQPStreamConnection('rabbitmq', 5672, 'guest', 'guest');
+            $connection = new \PhpAmqpLib\Connection\AMQPStreamConnection('rabbitmq', 5672, 'guest', 'guest');
             $channel = $connection->channel();
             $channel->queue_declare('demo_queue', false, false, false, false);
-            $msg = new AMQPMessage('Hello from DashboardController! User: ' . $this->getUser()?->getUserIdentifier());
+            $msg = new \PhpAmqpLib\Message\AMQPMessage('Hello from DashboardController! User: ' . $this->getUser()?->getUserIdentifier());
             $channel->basic_publish($msg, '', 'demo_queue');
             $channel->close();
             $connection->close();
-            $messageSent = true;
+            $this->addFlash('success', 'Сообщение отправлено в RabbitMQ!');
+            return $this->redirectToRoute('dashboard');
         }
-        return $this->render('dashboard/index.html.twig', [
-            'messageSent' => $messageSent
-        ]);
+        return $this->render('dashboard/index.html.twig');
     }
 } 

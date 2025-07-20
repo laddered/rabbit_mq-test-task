@@ -44,5 +44,16 @@ services:
     networks:
       - rabbit_mq_test_network
 
+  yarn:
+    build:
+      context: .
+      dockerfile: images/yarn/Dockerfile
+    working_dir: /var/www/rabbit_mq-test-task
+    volumes:
+      - ./www/rabbit_mq-test-task:/var/www/rabbit_mq-test-task
+    networks:
+      - rabbit_mq_test_network
+    
+
 networks:
   rabbit_mq_test_network:
