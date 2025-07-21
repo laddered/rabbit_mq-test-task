@@ -1,3 +1,94 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #FFF7ED;
+    color: #6B3F00;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    background-image:
+        linear-gradient(rgba(255,247,237,0.8), rgba(255,247,237,0.8)),
+        url('../images/rabbitmq-logo-svgrepo-com.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 30vw auto;
+}
+
+.container {
+    flex: 1 0 auto;
+}
+
+.footer {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    color: #6B3F00;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.card {
+    background: #FFE5B4 !important;
+    border-radius: 0.5rem !important;
+    border: 2px solid #FFB347 !important;
+    box-shadow: 0 4px 24px 0 rgba(255, 179, 71, 0.10);
+}
+
+.btn-primary, .btn-success {
+    background: #FFB347 !important;
+    color: #6B3F00 !important;
+    border-radius: 0.5rem !important;
+    border: 2px solid #FFB347 !important;
+    font-weight: bold;
+    box-shadow: 0 2px 8px 0 rgba(255, 179, 71, 0.10);
+}
+
+.btn-primary:hover, .btn-success:hover {
+    background: #FFD580 !important;
+    color: #6B3F00 !important;
+}
+
+.form-control {
+    background: #FFF7ED !important;
+    border-radius: 0.5rem !important;
+    border: none !important;
+    color: #6B3F00 !important;
+}
+
+input:focus, .form-control:focus {
+    border-color: #FFB347 !important;
+    box-shadow: 0 0 0 0.1rem rgba(255, 179, 71, 0.15) !important;
+    outline: none !important;
+}
+
+.alert-success {
+    background: #FFF3E0 !important;
+    color: #6B3F00 !important;
+    border-radius: 0.5rem !important;
+    border: 2px solid #FFB347 !important;
+}
+
+hr {
+    border-top: 2px solid #FFB347 !important;
+    border-radius: 1px;
+}
+
+.link-warm {
+    color: #FFB347 !important;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    transition: background 0.2s, color 0.2s;
+}
+
+.link-warm:hover, .link-warm:focus {
+    background: #FFE5B4;
+    color: #6B3F00 !important;
+    text-decoration: none;
 }

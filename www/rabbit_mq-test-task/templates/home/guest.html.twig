@@ -3,9 +3,7 @@
 <div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
   <div class="card shadow-sm" style="max-width: 400px; width: 100%;">
     <div class="card-body text-center">
-      <h1 class="card-title mb-3">Добро пожаловать!</h1>
-      <p class="card-text mb-4">Пожалуйста, <a href="/login">войдите</a> или <a href="/register">зарегистрируйтесь</a>, чтобы продолжить.</p>
-      <form method="post" class="mt-4">
+      <form method="post" class="">
         <button type="submit" class="btn btn-success w-100">Отправить сообщение в RabbitMQ</button>
       </form>
       {% for message in app.flashes('success') %}
