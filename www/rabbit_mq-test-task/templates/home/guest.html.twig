@@ -3,14 +3,8 @@
 <div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
   <div class="card shadow-sm" style="max-width: 400px; width: 100%;">
     <div class="card-body text-center">
-      <form method="post" class="">
-        <button type="submit" class="btn btn-success w-100">Отправить сообщение в RabbitMQ</button>
-      </form>
-      {% for message in app.flashes('success') %}
-          <div id="rabbitmq-alert" class="alert alert-success mt-3" role="alert">
-              {{ message }}
-          </div>
-      {% endfor %}
+      <button id="send-rabbitmq-btn" class="btn btn-success w-100">Отправить сообщение в RabbitMQ</button>
+      <div id="rabbitmq-alert-container"></div>
     </div>
   </div>
 </div>

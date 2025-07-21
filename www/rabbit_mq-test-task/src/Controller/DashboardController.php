@@ -19,23 +19,15 @@ class DashboardController extends AbstractController
     public function index(Request $request, EntityManagerInterface $em): Response
     {
         if ($request->isMethod('POST')) {
-            $content = 'Hello from DashboardController! User: ' . $this->getUser()?->getUserIdentifier();
-            $message = new Message();
-            $message->setContent($content);
-            $message->setStatus('queued');
-            $message->setCreatedAt(new \DateTimeImmutable());
-            $em->persist($message);
-            $em->flush();
-
             $connection = new \PhpAmqpLib\Connection\AMQPStreamConnection('rabbitmq', 5672, 'guest', 'guest');
             $channel = $connection->channel();
             $channel->queue_declare('demo_queue', false, false, false, false);
-            $msg = new \PhpAmqpLib\Message\AMQPMessage((string)$message->getId());
+            $msg = new \PhpAmqpLib\Message\AMQPMessage('Message from DashboardController!');
             $channel->basic_publish($msg, '', 'demo_queue');
             $channel->close();
             $connection->close();
             $this->addFlash('success', 'Сообщение отправлено в RabbitMQ!');
-            return $this->redirectToRoute('dashboard');
+            return $this->redirectToRoute('home');
         }
         return $this->render('dashboard/index.html.twig');
     }

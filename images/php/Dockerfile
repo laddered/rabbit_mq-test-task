@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y \
 
 RUN docker-php-ext-install bcmath
 
+RUN echo "error_reporting = E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED" > /usr/local/etc/php/conf.d/error_reporting.ini
+
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 WORKDIR /var/www

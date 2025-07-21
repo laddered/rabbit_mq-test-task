@@ -6,14 +6,8 @@
         <h1 class="card-title">Dashboard</h1>
         <p class="card-text">Добро пожаловать в панель управления!</p>
         {% if app.user %}
-            <form method="post" class="mt-4">
-                <button type="submit" class="btn btn-success">Отправить сообщение в RabbitMQ</button>
-            </form>
-            {% for message in app.flashes('success') %}
-                <div id="rabbitmq-alert" class="alert alert-success mt-3" role="alert">
-                    {{ message }}
-                </div>
-            {% endfor %}
+            <button id="send-rabbitmq-btn" class="btn btn-success mt-4">Отправить сообщение в RabbitMQ</button>
+            <div id="rabbitmq-alert-container"></div>
         {% endif %}
     </div>
 </div>

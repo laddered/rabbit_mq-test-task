@@ -25,7 +25,7 @@ class HomeController extends AbstractController
                 $connection = new \PhpAmqpLib\Connection\AMQPStreamConnection('rabbitmq', 5672, 'guest', 'guest');
                 $channel = $connection->channel();
                 $channel->queue_declare('demo_queue', false, false, false, false);
-                $msg = new \PhpAmqpLib\Message\AMQPMessage('Hello from HomeController!');
+                $msg = new \PhpAmqpLib\Message\AMQPMessage('Message from HomeController!');
                 $channel->basic_publish($msg, '', 'demo_queue');
                 $channel->close();
                 $connection->close();
@@ -81,5 +81,24 @@ class HomeController extends AbstractController
             'error' => $error,
             'last_username' => $last_username
         ]);
+    }
+
+    #[Route('/send-rabbitmq', name: 'send_rabbitmq', methods: ['POST'])]
+    public function sendRabbitMQ(Request $request): Response
+    {
+        // Можно добавить проверку авторизации, если нужно
+        $message = $request->request->get('message', 'Message from JS!');
+        try {
+            $connection = new \PhpAmqpLib\Connection\AMQPStreamConnection('rabbitmq', 5672, 'guest', 'guest');
+            $channel = $connection->channel();
+            $channel->queue_declare('demo_queue', false, false, false, false);
+            $msg = new \PhpAmqpLib\Message\AMQPMessage($message);
+            $channel->basic_publish($msg, '', 'demo_queue');
+            $channel->close();
+            $connection->close();
+            return $this->json(['success' => true, 'message' => 'Сообщение отправлено в RabbitMQ!']);
+        } catch (\Exception $e) {
+            return $this->json(['success' => false, 'message' => 'Ошибка: ' . $e->getMessage()], 500);
+        }
     }
 } 
