@@ -24,3 +24,11 @@ cd rabbit_mq-test-task
 ```bash
 docker-compose up -d --build
 ```
+3. Выполните миграции в Symfony-контейнере:
+```bash
+docker-compose exec php php bin/console doctrine:migrations:migrate
+```
+4. Соберите фронтенд-ассеты в контейнере yarn:
+```bash
+docker-compose exec yarn yarn encore dev
+```

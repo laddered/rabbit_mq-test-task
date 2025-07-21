@@ -11,4 +11,47 @@
         {% endif %}
     </div>
 </div>
+
+<div class="card mt-4">
+    <div class="card-body">
+        <h2 class="card-title">Сообщения в базе</h2>
+        {% if messages is not empty %}
+            <table class="table table-bordered table-striped mt-3">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Текст</th>
+                        <th>Статус</th>
+                        <th>Создано</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for message in messages %}
+                    <tr>
+                        <td>{{ message.id }}</td>
+                        <td>{{ message.content }}</td>
+                        <td>{{ message.status }}</td>
+                        <td>{{ message.createdAt|date('Y-m-d H:i:s') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <nav aria-label="Пагинация сообщений">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item{% if page == 1 %} disabled{% endif %}">
+                        <a class="page-link" href="?page={{ page - 1 }}" tabindex="-1">Назад</a>
+                    </li>
+                    {% for p in 1..total_pages %}
+                        <li class="page-item{% if p == page %} active{% endif %}"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+                    {% endfor %}
+                    <li class="page-item{% if page == total_pages %} disabled{% endif %}">
+                        <a class="page-link" href="?page={{ page + 1 }}">Вперёд</a>
+                    </li>
+                </ul>
+            </nav>
+        {% else %}
+            <p>Нет сообщений в базе.</p>
+        {% endif %}
+    </div>
+</div>
 {% endblock %} 

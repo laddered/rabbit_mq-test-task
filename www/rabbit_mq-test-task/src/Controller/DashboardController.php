@@ -29,6 +29,17 @@ class DashboardController extends AbstractController
             $this->addFlash('success', 'Сообщение отправлено в RabbitMQ!');
             return $this->redirectToRoute('home');
         }
-        return $this->render('dashboard/index.html.twig');
+        $page = max(1, (int)$request->query->get('page', 1));
+        $limit = 10;
+        $offset = ($page - 1) * $limit;
+        $repo = $em->getRepository(Message::class);
+        $messages = $repo->findBy([], ['createdAt' => 'DESC'], $limit, $offset);
+        $total = $repo->count([]);
+        $totalPages = (int)ceil($total / $limit);
+        return $this->render('dashboard/index.html.twig', [
+            'messages' => $messages,
+            'page' => $page,
+            'total_pages' => $totalPages
+        ]);
     }
 } 
